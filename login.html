@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started - Create Your Account</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .back-link:hover {
+            color: white;
+        }
+        
+        .progress-container {
+            margin: 40px 0;
+            padding: 0 20px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .progress-steps::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 4px;
+            width: 100%;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .progress-bar {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            height: 4px;
+            width: 33%;
+            background-color: #3498db;
+            z-index: 2;
+            transition: width 0.3s ease;
+        }
+        
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #777;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .step.active {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .step-label {
+            position: absolute;
+            top: 45px;
+            font-size: 14px;
+            color: #777;
+            white-space: nowrap;
+        }
+        
+        .step.active .step-label {
+            color: #3498db;
+            font-weight: 600;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .form-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 6px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid #ddd;
+            color: #777;
+        }
+        
+        .btn-outline:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .form-step {
+            display: none;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .success-icon {
+            font-size: 60px;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #777;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .progress-steps {
+                max-width: 90%;
+            }
+            
+            .step-label {
+                font-size: 12px;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">YourBrand</div>
+            <h1>Get Started with YourBrand</h1>
+            <a href="#" class="back-link">← Back to homepage</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-bar" id="progress"></div>
+                <div class="step active">
+                    <span>1</span>
+                    <div class="step-label">Account</div>
+                </div>
+                <div class="step">
+                    <span>2</span>
+                    <div class="step-label">Profile</div>
+                </div>
+                <div class="step">
+                    <span>3</span>
+                    <div class="step-label">Plan</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <!-- Step 1: Account Information -->
+            <div class="form-step active" id="step1">
+                <h2 class="form-title">Create Your Account</h2>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Create a strong password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Confirm your password">
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="newsletter">
+                    <label for="newsletter">Send me product updates and tips</label>
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn btn-outline" id="backBtn">Back</button>
+                    <button class="btn btn-primary" id="nextBtn1">Next</button>
+                </div>
+            </div>
+            
+            <!-- Step 2: Profile Information -->
+            <div class="form-step" id="step2">
+                <h2 class="form-title">Tell Us About Yourself</h2>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" placeholder="John Smith">
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company (Optional)</label>
+                    <input type="text" id="company" placeholder="Your company name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Your Role</label>
+                    <select id="role">
+                        <option value="">Select your role</option>
+                        <option value="owner">Business Owner</option>
+                        <option value="manager">Manager</option>
+                        <option value="developer">Developer</option>
+                        <option value="designer">Designer</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn btn-outline" id="backBtn2">Back</button>
+                    <button class="btn btn-primary" id="nextBtn2">Next</button>
+                </div>
+            </div>
+            
+            <!-- Step 3: Plan Selection -->
+            <div class="form-step" id="step3">
+                <h2 class="form-title">Choose Your Plan</h2>
+                
+                <div class="form-group">
+                    <label for="plan">Select a Plan</label>
+                    <select id="plan">
+                        <option value="">Choose a plan</option>
+                        <option value="free">Free Plan (Basic features)</option>
+                        <option value="pro">Pro Plan ($19/month - Most popular)</option>
+                        <option value="enterprise">Enterprise Plan ($49/month - Full features)</option>
+                    </select>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="terms">
+                    <label for="terms">I agree to the Terms of Service and Privacy Policy</label>
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn btn-outline" id="backBtn3">Back</button>
+                    <button class="btn btn-primary" id="submitBtn">Create Account</button>
+                </div>
+            </div>
+            
+            <!-- Success Message -->
+            <div class="form-step" id="success">
+                <div class="success-message">
+                    <div class="success-icon">✓</div>
+                    <h2>Account Created Successfully!</h2>
+                    <p>Thank you for signing up. We've sent a confirmation email to your address.</p>
+                    <div style="margin-top: 30px;">
+                        <button class="btn btn-primary" id="dashboardBtn">Go to Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>© 2023 YourBrand. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const progress = document.getElementById('progress');
+            const steps = document.querySelectorAll('.step');
+            const formSteps = document.querySelectorAll('.form-step');
+            const nextBtn1 = document.getElementById('nextBtn1');
+            const nextBtn2 = document.getElementById('nextBtn2');
+            const backBtn2 = document.getElementById('backBtn2');
+            const backBtn3 = document.getElementById('backBtn3');
+            const submitBtn = document.getElementById('submitBtn');
+            const dashboardBtn = document.getElementById('dashboardBtn');
+            
+            let currentStep = 1;
+            
+            // Update progress
+            function updateProgress() {
+                progress.style.width = `${(currentStep - 1) * 33}%`;
+                
+                steps.forEach((step, index) => {
+                    if (index < currentStep) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+                
+                formSteps.forEach((formStep, index) => {
+                    if (index === currentStep - 1) {
+                        formStep.classList.add('active');
+                    } else {
+                        formStep.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Next button event listeners
+            nextBtn1.addEventListener('click', function() {
+                // Simple validation
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (!email || !password || !confirmPassword) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                
+                currentStep = 2;
+                updateProgress();
+            });
+            
+            nextBtn2.addEventListener('click', function() {
+                // Simple validation
+                const fullName = document.getElementById('fullName').value;
+                
+                if (!fullName) {
+                    alert('Please enter your full name');
+                    return;
+                }
+                
+                currentStep = 3;
+                updateProgress();
+            });
+            
+            // Back button event listeners
+            backBtn2.addEventListener('click', function() {
+                currentStep = 1;
+                updateProgress();
+            });
+            
+            backBtn3.addEventListener('click', function() {
+                currentStep = 2;
+                updateProgress();
+            });
+            
+            // Submit button
+            submitBtn.addEventListener('click', function() {
+                // Simple validation
+                const plan = document.getElementById('plan').value;
+                const terms = document.getElementById('terms').checked;
+                
+                if (!plan) {
+                    alert('Please select a plan');
+                    return;
+                }
+                
+                if (!terms) {
+                    alert('Please agree to the Terms of Service');
+                    return;
+                }
+                
+                currentStep = 4;
+                updateProgress();
+            });
+            
+            // Dashboard button
+            dashboardBtn.addEventListener('click', function() {
+                alert('Redirecting to dashboard...');
+            });
+        });
+    </script>
+</body>
+</html>
